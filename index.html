@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario's comerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="top-bar">
+        <div class="left-section">
+             <div id="user-display" class="user-info">
+                <i class="fas fa-user-circle user-icon" id="user-menu-icon"></i> <span id="logged-in-username" class="username"></span>
+                <button id="logout-button">Cerrar Sesión</button>
+            </div>
+        </div>
+        <div class="right-section">
+             <div id="auth-buttons">
+                <button id="login-button">Iniciar Sesión</button>
+                <button id="register-button">Registrarte</button>
+            </div>
+            <button id="favorites-button">Favoritos</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>Mario's comerce</h1>
+        </header>
+
+    <div class="container">
+        <section class="product-list" id="product-list">
+        </section>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <div id="login-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" data-modal="login-modal">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Correo Electrónico" required>
+                <input type="password" id="login-password" placeholder="Contraseña" required>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+            <div class="register-link">
+                ¿No tienes una cuenta? <button id="switch-to-register">Registrarte</button>
+            </div>
+             <div class="social-login">
+                <p>O inicia sesión con:</p>
+                <button id="google-login-button"><i class="fab fa-google google"></i> Continuar con Google</button>
+                <button id="apple-login-button"><i class="fab fa-apple apple"></i> Continuar con Apple</button>
+                <button id="facebook-login-button"><i class="fab fa-facebook facebook"></i> Continuar con Facebook</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="register-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" data-modal="register-modal">&times;</span>
+            <h2>Registrarte</h2>
+            <form id="register-form">
+                <input type="text" id="register-username" placeholder="Nombre de Usuario" required>
+                <input type="email" id="register-email" placeholder="Correo Electrónico" required>
+                <input type="password" id="register-password" placeholder="Contraseña" required>
+                <input type="password" id="register-confirm-password" placeholder="Confirmar Contraseña" required>
+                <button type="submit">Registrarte</button>
+            </form>
+            <div class="register-link">
+                ¿Ya tienes una cuenta? <button id="switch-to-login">Iniciar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="user-menu-modal" class="user-menu-overlay">
+        <div class="user-menu-content">
+            <span class="modal-close" data-modal="user-menu-modal">&times;</span>
+            <h3>Menú de Usuario</h3>
+            <ul>
+                <li><a href="#">Mi cuenta</a></li>
+                <li><a href="#">Compras</a></li> <li><a href="#">Historial</a></li> <li><a href="#">Favoritos</a></li>
+                <li><a href="#">Categorias</a></li>
+                <li><a href="#">Vender</a></li>
+                <li><a href="#">Opiniones</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Mario Vazquez. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
