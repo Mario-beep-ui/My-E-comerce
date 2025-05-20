@@ -84,6 +84,31 @@ header h1 {
     background-color: var(--light-grey);
 }
 
+.search-bar {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px 20px;
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    font-size: 1em;
+    box-shadow: inset 0 1px 3px var(--shadow-subtle);
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar input:focus {
+    border-color: var(--bright-blue);
+    box-shadow: 0 0 0 3px rgba(78, 113, 255, 0.2);
+}
+
+
 .container {
     width: 95%;
     max-width: 1400px;
@@ -116,7 +141,7 @@ header h1 {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
- .product-card:hover {
+.product-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 8px 16px var(--shadow-strong);
 }
@@ -144,7 +169,7 @@ header h1 {
     margin-bottom: 20px;
 }
 
- .product-card .category {
+.product-card .category {
     font-size: 0.9em;
     color: var(--text-light);
     margin-bottom: 15px;
@@ -186,9 +211,9 @@ header h1 {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px var(--shadow-medium);
 }
- .product-actions button:active {
+.product-actions button:active {
     transform: translateY(0);
-     box-shadow: none;
+    box-shadow: none;
 }
 
 .favorite-button {
@@ -207,9 +232,9 @@ header h1 {
     border-color: #ffc107;
 }
 
- .favorite-button:hover {
+.favorite-button:hover {
     color: #ffc107;
-     border-color: #ffc107;
+    border-color: #ffc107;
     transform: scale(1.2);
 }
 
@@ -333,12 +358,12 @@ header h1 {
     box-sizing: border-box;
 }
 
- .modal-content button[type="submit"]:hover {
+.modal-content button[type="submit"]:hover {
     background-color: var(--deep-purple);
     transform: translateY(-2px);
 }
 
- .modal-content button[type="submit"]:active {
+.modal-content button[type="submit"]:active {
     transform: translateY(0);
 }
 
@@ -438,33 +463,33 @@ footer {
     transition: color 0.3s ease;
 }
 
- .user-info .user-icon:hover {
+.user-info .user-icon:hover {
     color: var(--bright-blue);
- }
+}
 
- .user-info .username {
+.user-info .username {
     font-size: 1em;
     font-weight: 500;
     color: var(--text-medium);
- }
+}
 
- .user-info {
-     display: flex;
-     align-items: center;
-     gap: 10px;
- }
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
- #user-display {
-     display: none;
- }
+#user-display {
+    display: none;
+}
 
- #auth-buttons {
-     display: flex;
-     align-items: center;
-     gap: 15px;
- }
+#auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
- .user-menu-overlay {
+.user-menu-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -475,14 +500,14 @@ footer {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s ease, visibility 0.3s ease;
- }
+}
 
- .user-menu-overlay.visible {
+.user-menu-overlay.visible {
     visibility: visible;
     opacity: 1;
- }
+}
 
- .user-menu-content {
+.user-menu-content {
     background-color: var(--white);
     padding: 20px;
     border-radius: 8px;
@@ -496,61 +521,197 @@ footer {
     transform: translateY(-100%);
     transition: transform 0.3s ease-out;
     box-sizing: border-box;
- }
+}
 
- .user-menu-overlay.visible .user-menu-content {
-     transform: translateY(0);
- }
+.user-menu-overlay.visible .user-menu-content {
+    transform: translateY(0);
+}
 
- .user-menu-content h3 {
-     margin-top: 0;
-     margin-bottom: 15px;
-     color: var(--text-dark);
-     font-size: 1.2em;
-     border-bottom: 1px solid var(--border-light);
-     padding-bottom: 10px;
-     font-weight: 600;
- }
+.user-menu-content h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+    font-size: 1.2em;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 10px;
+    font-weight: 600;
+}
 
- .user-menu-content ul {
-     list-style: none;
-     padding: 0;
-     margin: 0;
- }
+.user-menu-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
- .user-menu-content li {
-     margin-bottom: 10px;
- }
+.user-menu-content li {
+    margin-bottom: 10px;
+}
 
- .user-menu-content a {
-     text-decoration: none;
-     color: var(--text-medium);
-     font-size: 1em;
-     display: block;
-     padding: 8px 0;
-     transition: color 0.3s ease;
- }
+.user-menu-content a {
+    text-decoration: none;
+    color: var(--text-medium);
+    font-size: 1em;
+    display: block;
+    padding: 8px 0;
+    transition: color 0.3s ease;
+}
 
- .user-menu-content a:hover {
-     color: var(--bright-blue);
- }
+.user-menu-content a:hover {
+    color: var(--bright-blue);
+}
 
- .user-menu-content .modal-close {
-     position: absolute;
-     top: 10px;
-     right: 10px;
-     font-size: 1.5em;
-     cursor: pointer;
-     color: var(--text-light);
- }
+.user-menu-content .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: var(--text-light);
+}
 
- .user-menu-content .modal-close:hover {
-     color: var(--text-medium);
- }
+.user-menu-content .modal-close:hover {
+    color: var(--text-medium);
+}
 
-/* --- Responsive Styles --- */
+.my-account-section {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow-medium);
+    padding: 30px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
 
-/* Tablets and larger phones */
+.my-account-section.visible {
+    display: flex;
+}
+
+.my-account-section .back-button {
+    background: none;
+    border: none;
+    color: var(--bright-blue);
+    cursor: pointer;
+    font-size: 1em;
+    text-align: left;
+    padding: 0;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.my-account-section .back-button:hover {
+    color: var(--deep-purple);
+}
+
+.my-account-section .account-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 25px;
+}
+
+.my-account-section .avatar {
+    width: 80px;
+    height: 80px;
+    background-color: var(--deep-purple);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.my-account-section .user-details {
+    text-align: left;
+}
+
+.my-account-section .user-details .user-name {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    color: var(--text-dark);
+}
+
+.my-account-section .user-details .user-email {
+    font-size: 1em;
+    color: var(--text-medium);
+    margin: 0 0 8px 0;
+}
+
+.my-account-section .account-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.my-account-section .account-options li {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-light);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.my-account-section .account-options li:last-child {
+    border-bottom: none;
+}
+
+.my-account-section .account-options li:hover {
+    background-color: var(--light-grey);
+}
+
+.my-account-section .account-options li .fas {
+    font-size: 1.3em;
+    color: var(--text-medium);
+    margin-right: 15px;
+    width: 30px;
+    text-align: center;
+}
+
+.my-account-section .account-options li .option-content {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.my-account-section .account-options li h4 {
+    margin: 0 0 3px 0;
+    font-size: 1.1em;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.my-account-section .account-options li p {
+    margin: 0;
+    font-size: 0.9em;
+    color: var(--text-light);
+}
+
+.my-account-section .account-options li .fa-chevron-right {
+    color: var(--text-light);
+    font-size: 0.9em;
+    margin-left: 15px;
+}
+
+.no-results {
+    width: 100%;
+    text-align: center;
+    color: var(--text-medium);
+    font-size: 1.2em;
+    margin-top: 50px;
+}
+
 @media (max-width: 768px) {
     header h1 {
         font-size: 1.8em;
@@ -558,22 +719,27 @@ footer {
 
     .top-bar {
         padding: 0.8em 15px;
-        height: auto; /* Allow height to adjust */
-        flex-wrap: wrap; /* Allow items to wrap if needed */
-        justify-content: space-around; /* Better spacing if wrapped */
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
 
     .top-bar .left-section,
     .top-bar .right-section {
         gap: 10px;
-        flex-basis: 100%; /* Make sections take full width if they wrap */
-        justify-content: center; /* Center items when wrapped */
-        padding-bottom: 5px; /* Add some space if wrapped */
+        flex-basis: 100%;
+        justify-content: center;
+        padding-bottom: 5px;
     }
-     .top-bar .right-section {
+    .top-bar .right-section {
         padding-top: 5px;
     }
 
+    .search-bar {
+        order: 3;
+        flex-basis: 100%;
+        margin: 10px 0;
+    }
 
     .top-bar button {
         font-size: 0.85em;
@@ -581,12 +747,11 @@ footer {
     }
 
     .user-info .username {
-        display: none; /* Hide username on smaller screens to save space, icon is enough */
+        display: none;
     }
     #user-display {
-        justify-content: center; /* Center the user icon and logout button */
+        justify-content: center;
     }
-
 
     .container {
         width: 95%;
@@ -595,7 +760,7 @@ footer {
     }
 
     .product-list {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust minmax for tablets */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
     }
 
@@ -630,19 +795,18 @@ footer {
     .product-actions {
         margin-top: 20px;
         gap: 10px;
-        flex-direction: column; /* Stack buttons in product card */
+        flex-direction: column;
     }
 
     .product-actions button,
     .favorite-button {
-        width: 100%; /* Make buttons take full width */
+        width: 100%;
         padding: 12px 15px;
         font-size: 0.9em;
     }
     .favorite-button {
-         font-size: 1.3em; /* Adjust icon size */
+        font-size: 1.3em;
     }
-
 
     .modal-content {
         padding: 30px;
@@ -668,13 +832,51 @@ footer {
     }
 
     .user-menu-content {
-        max-width: 250px; /* Slightly reduce max width */
+        max-width: 250px;
         left: 15px;
-        top: 55px; /* Adjust if top bar height changes */
+        top: 55px;
+    }
+
+    .my-account-section {
+        padding: 25px;
+    }
+
+    .my-account-section .account-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .my-account-section .user-details {
+        text-align: center;
+    }
+
+    .my-account-section .avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8em;
+    }
+
+    .my-account-section .user-details .user-name {
+        font-size: 1.3em;
+    }
+
+    .my-account-section .user-details .user-email {
+        font-size: 0.95em;
+    }
+
+    .my-account-section .account-options li {
+        padding: 12px 0;
+    }
+
+    .my-account-section .account-options li h4 {
+        font-size: 1em;
+    }
+
+    .my-account-section .account-options li p {
+        font-size: 0.85em;
     }
 }
 
-/* Smaller mobile phones */
 @media (max-width: 480px) {
     header {
         padding: 1.5em 0;
@@ -685,20 +887,20 @@ footer {
 
     .top-bar {
         padding: 0.5em 10px;
-        justify-content: center; /* Center items on very small screens */
+        justify-content: center;
     }
-     .top-bar .left-section {
-        padding-bottom: 8px; /* More space if they wrap */
+    .top-bar .left-section {
+        padding-bottom: 8px;
     }
     .top-bar .right-section {
-        gap: 8px; /* Reduce gap further */
+        gap: 8px;
     }
-     #auth-buttons {
-        flex-direction: column; /* Stack login/register buttons */
+    #auth-buttons {
+        flex-direction: column;
         width: 100%;
-        align-items: stretch; /* Make buttons take full width */
+        align-items: stretch;
     }
-     #auth-buttons button {
+    #auth-buttons button {
         width: 100%;
         text-align: center;
         margin-bottom: 5px;
@@ -711,6 +913,13 @@ footer {
         padding: 6px 8px;
     }
 
+    .search-bar {
+        margin: 8px 0;
+    }
+    .search-bar input {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
 
     .container {
         margin: 15px auto;
@@ -718,7 +927,6 @@ footer {
     }
 
     .product-list {
-        /* Display one item per row on small mobiles */
         grid-template-columns: 1fr;
         gap: 15px;
     }
@@ -755,7 +963,7 @@ footer {
         font-size: 0.85em;
     }
     .favorite-button {
-         font-size: 1.2em; /* Adjust icon size */
+        font-size: 1.2em;
     }
 
     .notification {
@@ -803,12 +1011,11 @@ footer {
         font-size: 1.1em;
     }
 
-
     .user-menu-content {
-        max-width: none; /* Allow it to take more width */
-        width: calc(100% - 30px); /* Full width with some padding */
+        max-width: none;
+        width: calc(100% - 30px);
         left: 15px;
-        top: 50px; /* Adjust if top bar height changes */
+        top: 50px;
     }
     .user-menu-content h3{
         font-size: 1.1em;
@@ -820,5 +1027,54 @@ footer {
     footer {
         font-size: 0.8em;
         padding: 0.8em 0;
+    }
+
+    .my-account-section {
+        padding: 15px;
+    }
+
+    .my-account-section .back-button {
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+
+    .my-account-section .account-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .my-account-section .avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em;
+    }
+
+    .my-account-section .user-details .user-name {
+        font-size: 1.1em;
+    }
+
+    .my-account-section .user-details .user-email {
+        font-size: 0.85em;
+    }
+
+    .my-account-section .account-options li {
+        padding: 10px 0;
+    }
+
+    .my-account-section .account-options li h4 {
+        font-size: 0.95em;
+    }
+
+    .my-account-section .account-options li p {
+        font-size: 0.8em;
+    }
+
+    .my-account-section .account-options li .fas {
+        font-size: 1.1em;
+        margin-right: 10px;
+        width: 25px;
     }
 }

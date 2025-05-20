@@ -81,7 +81,6 @@ const localProducts = [
     }
 ];
 
-
 const productListElement = document.getElementById('product-list');
 const loadingOverlay = document.getElementById('loading-overlay');
 const notificationElement = document.getElementById('notification');
@@ -89,7 +88,7 @@ const favoritesButton = document.getElementById('favorites-button');
 const loginButton = document.getElementById('login-button');
 const registerButton = document.getElementById('register-button');
 const userMenuIcon = document.getElementById('user-menu-icon');
-
+const searchInput = document.getElementById('search-input');
 
 const loginModal = document.getElementById('login-modal');
 const registerModal = document.getElementById('register-modal');
@@ -110,19 +109,18 @@ const userDisplayDiv = document.getElementById('user-display');
 const loggedInUsernameSpan = document.getElementById('logged-in-username');
 const logoutButton = document.getElementById('logout-button');
 
-const topBarLeftSection = document.querySelector('.top-bar .left-section');
-const topBarRightSection = document.querySelector('.top-bar .right-section');
-
 const googleLoginButton = document.getElementById('google-login-button');
 const appleLoginButton = document.getElementById('apple-login-button');
 const facebookLoginButton = document.getElementById('facebook-login-button');
 
+const myAccountLink = document.getElementById('my-account-link');
+const myAccountSection = document.getElementById('my-account-section');
+const backToMainMenuButton = document.getElementById('back-to-main-menu');
 
 let products = [];
 let favorites = JSON.parse(localStorage.getItem('ecommerceFavorites')) || [];
 let users = JSON.parse(localStorage.getItem('ecommerceUsers')) || [];
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
-
 
 const showLoading = () => {
     loadingOverlay.style.display = 'flex';
@@ -164,13 +162,17 @@ const fetchProducts = async () => {
     showLoading();
     await new Promise(resolve => setTimeout(resolve, 500));
     products = localProducts;
-    renderProducts();
+    renderProducts(products);
     hideLoading();
 };
 
-const renderProducts = () => {
+const renderProducts = (productsToRender) => {
     productListElement.innerHTML = '';
-    products.forEach(product => {
+    if (productsToRender.length === 0) {
+        productListElement.innerHTML = '<p class="no-results">No se encontraron productos que coincidan con su búsqueda.</p>';
+        return;
+    }
+    productsToRender.forEach(product => {
         const isFavorited = favorites.some(fav => fav.id === product.id);
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
@@ -210,13 +212,27 @@ const toggleFavorite = (productId, buttonElement) => {
     localStorage.setItem('ecommerceFavorites', JSON.stringify(favorites));
 };
 
+const searchProducts = () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const filteredProducts = products.filter(product => {
+        return product.name.toLowerCase().includes(searchTerm) ||
+               product.description.toLowerCase().includes(searchTerm) ||
+               product.category.toLowerCase().includes(searchTerm);
+    });
+    renderProducts(filteredProducts);
+};
+
+searchInput.addEventListener('input', searchProducts);
+
 loginButton.addEventListener('click', () => {
     hideModal(registerModal);
+    hideSection(myAccountSection);
     showModal(loginModal);
 });
 
 registerButton.addEventListener('click', () => {
     hideModal(loginModal);
+    hideSection(myAccountSection);
     showModal(registerModal);
 });
 
@@ -224,7 +240,6 @@ favoritesButton.addEventListener('click', () => {
     showNotification('Funcionalidad de ver Favoritos no implementada.', 3000);
     console.log('Current Favorites:', favorites);
 });
-
 
 modalCloseButtons.forEach(button => {
     button.addEventListener('click', (event) => {
@@ -301,6 +316,8 @@ logoutButton.addEventListener('click', () => {
     localStorage.removeItem('currentUser');
     showNotification('Sesión cerrada.', 3000);
     updateTopBar();
+    hideSection(myAccountSection);
+    showSection(productListElement);
 });
 
 googleLoginButton.addEventListener('click', async () => {
@@ -346,8 +363,38 @@ userMenuModal.addEventListener('click', (event) => {
     }
 });
 
+const showSection = (sectionElement) => {
+    productListElement.classList.remove('visible');
+    myAccountSection.classList.remove('visible');
+    productListElement.style.display = 'none';
+    myAccountSection.style.display = 'none';
+
+    sectionElement.classList.add('visible');
+    if (sectionElement === productListElement) {
+        sectionElement.style.display = 'grid';
+    } else {
+        sectionElement.style.display = 'flex';
+    }
+};
+
+const hideSection = (sectionElement) => {
+    sectionElement.classList.remove('visible');
+    sectionElement.style.display = 'none';
+};
+
+myAccountLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    hideModal(userMenuModal);
+    showSection(myAccountSection);
+});
+
+backToMainMenuButton.addEventListener('click', () => {
+    hideSection(myAccountSection);
+    showSection(productListElement);
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();
     updateTopBar();
+    showSection(productListElement);
 });

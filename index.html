@@ -20,6 +20,9 @@
                 <button id="logout-button">Cerrar Sesión</button>
             </div>
         </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Busca artículos, marcas y más...">
+        </div>
         <div class="right-section">
              <div id="auth-buttons">
                 <button id="login-button">Iniciar Sesión</button>
@@ -35,6 +38,74 @@
 
     <div class="container">
         <section class="product-list" id="product-list">
+        </section>
+        <section id="my-account-section" class="my-account-section">
+            <button id="back-to-main-menu" class="back-button"><i class="fas fa-arrow-left"></i> Regresar al Menú Principal</button>
+            <div class="account-header">
+                <div class="avatar">MV</div>
+                <div class="user-details">
+                    <p class="user-name">Mario Alejandro Vazquez Ramirez</p>
+                    <p class="user-email">mv109828@gmail.com</p>
+                </div>
+            </div>
+            <ul class="account-options">
+                <li>
+                    <i class="fas fa-user-check"></i>
+                    <div class="option-content">
+                        <h4>Información personal</h4>
+                        <p>Información de tu identificación oficial y tu actividad fiscal.</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li>
+                    <i class="fas fa-user"></i>
+                    <div class="option-content">
+                        <h4>Datos de tu cuenta</h4>
+                        <p>Datos que representan a la cuenta en Mario's comerce y Mario's Pago.</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li>
+                    <i class="fas fa-lock"></i>
+                    <div class="option-content">
+                        <h4>Seguridad</h4>
+                        <p>Tienes configuraciones pendientes.</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li>
+                    <i class="fas fa-credit-card"></i>
+                    <div class="option-content">
+                        <h4>Tarjetas</h4>
+                        <p>Tarjetas guardadas en tu cuenta.</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div class="option-content">
+                        <h4>Direcciones</h4>
+                        <p>Direcciones guardadas en tu cuenta.</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li>
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="option-content">
+                        <h4>Privacidad</h4>
+                        <p>Preferencias y control sobre el uso de tus datos.</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+                <li>
+                    <i class="fas fa-comments"></i>
+                    <div class="option-content">
+                        <h4>Comunicaciones</h4>
+                        <p>Elige qué tipo de información quieres recibir.</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </li>
+            </ul>
         </section>
     </div>
 
@@ -83,7 +154,7 @@
             <span class="modal-close" data-modal="user-menu-modal">&times;</span>
             <h3>Menú de Usuario</h3>
             <ul>
-                <li><a href="#">Mi cuenta</a></li>
+                <li><a href="#" id="my-account-link">Mi cuenta</a></li>
                 <li><a href="#">Compras</a></li> <li><a href="#">Historial</a></li> <li><a href="#">Favoritos</a></li>
                 <li><a href="#">Categorias</a></li>
                 <li><a href="#">Vender</a></li>
