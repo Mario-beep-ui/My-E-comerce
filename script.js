@@ -1,9 +1,58 @@
+// --- Elementos del DOM ---
+const loginRegisterModal = document.getElementById('login-register-modal');
+const loginButton = document.getElementById('login-button');
+const registerButton = document.getElementById('register-button');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const switchToRegisterButton = document.getElementById('switch-to-register');
+const switchToLoginButton = document.getElementById('switch-to-login');
+const loginSection = document.getElementById('login-section');
+const registerSection = document.getElementById('register-section');
+const modalCloseButtons = document.querySelectorAll('.modal-close');
+const loadingOverlay = document.getElementById('loading-overlay');
+const notificationBar = document.getElementById('notification-bar');
+
+const userDisplay = document.getElementById('user-display');
+const loggedInUsername = document.getElementById('logged-in-username');
+const logoutButton = document.getElementById('logout-button');
+const authButtons = document.getElementById('auth-buttons');
+
+const googleLoginButton = document.getElementById('google-login-button');
+const facebookLoginButton = document.getElementById('facebook-login-button');
+const appleLoginButton = document.getElementById('apple-login-button');
+
+const userMenuIcon = document.getElementById('user-menu-icon');
+const userMenuModal = document.getElementById('user-menu-modal');
+
+const productListElement = document.getElementById('product-list');
+const productsContainer = document.getElementById('products-container');
+
+const myAccountLink = document.getElementById('my-account-link');
+const myAccountSection = document.getElementById('my-account-section');
+const backToMainMenuButton = document.getElementById('back-to-main-menu-button');
+const accountUsername = document.getElementById('account-username');
+const accountEmail = document.getElementById('account-email');
+const lastLoginDate = document.getElementById('last-login-date');
+
+// NUEVOS ELEMENTOS DEL DOM PARA FAVORITOS
+const favoritesIcon = document.getElementById('favorites-icon'); // Icono de corazón en la barra superior
+const openFavoritesModalButton = document.getElementById('open-favorites-modal-button'); // Botón "Favoritos" en el menú de usuario
+const favoritesModal = document.getElementById('favorites-modal'); // El modal de favoritos
+const favoriteProductsContainer = document.getElementById('favorite-products-container'); // Contenedor dentro del modal
+const noFavoritesMessage = document.getElementById('no-favorites-message'); // Mensaje si no hay favoritos
+
+// --- Variables de Estado ---
+let currentUser = null;
+let products = []; // Array para almacenar todos los productos
+let favoriteProducts = []; // Array para almacenar los IDs de productos favoritos
+
+// --- Datos de Productos (simulados) ---
 const localProducts = [
     {
         id: 1,
         name: 'Laptop Ultraligera',
         description: 'Potente y portátil, ideal para trabajo y estudio.',
-        imageUrl: 'https://placehold.co/400x300/8DD8FF/000?text=imagen+pendiente',
+        imageUrl: 'https://placehold.co/400x300/8DD8FF/000?text=Laptop+Ultraligera',
         price: 999.99,
         category: 'Electrónica'
     },
@@ -11,7 +60,7 @@ const localProducts = [
         id: 2,
         name: 'Auriculares Inalámbricos',
         description: 'Sonido de alta fidelidad y cancelación de ruido activa.',
-        imageUrl: 'https://placehold.co/400x300/4E71FF/fff?text=imagen+pendiente',
+        imageUrl: 'https://placehold.co/400x300/4E71FF/fff?text=Auriculares+Inalámbricos',
         price: 149.50,
         category: 'Electrónica'
     },
@@ -19,7 +68,7 @@ const localProducts = [
         id: 3,
         name: 'Reloj Inteligente',
         description: 'Monitoriza tu actividad física y recibe notificaciones.',
-        imageUrl: 'https://placehold.co/400x300/5409DA/fff?text=imagen+pendiente',
+        imageUrl: 'https://placehold.co/400x300/5409DA/fff?text=Reloj+Inteligente',
         price: 79.00,
         category: 'Electrónica'
     },
@@ -27,115 +76,67 @@ const localProducts = [
         id: 4,
         name: 'Teclado Mecánico',
         description: 'Experiencia de escritura táctil y duradera.',
-        imageUrl: 'https://placehold.co/400x300/BBFBFF/000?text=imagen+pendiente',
+        imageUrl: 'https://placehold.co/400x300/BBFBFF/000?text=Teclado+Mecánico',
         price: 85.75,
         category: 'Accesorios'
     },
     {
         id: 5,
-        name: 'Mouse Ergonómico',
-        description: 'Diseño cómodo para largas sesiones de trabajo.',
-        imageUrl: 'https://placehold.co/400x300/EAE4D5/000?text=imagen+pendiente',
-        price: 35.00,
-        category: 'Accesorios'
-    },
-    {
-        id: 6,
-        name: 'Monitor 4K',
-        description: 'Imágenes nítidas y colores vibrantes para profesionales.',
-        imageUrl: 'https://placehold.co/400x300/B6B09F/fff?text=imagen+pendiente',
-        price: 349.99,
+        name: 'Monitor Curvo 27"',
+        description: 'Inmersión total para juegos y productividad.',
+        imageUrl: 'https://placehold.co/400x300/F2F2F2/333?text=Monitor+Curvo',
+        price: 299.00,
         category: 'Electrónica'
     },
     {
-        id: 7,
-        name: 'Webcam Full HD',
-        description: 'Videollamadas claras y fluidas.',
-        imageUrl: 'https://placehold.co/400x300/F2F2F2/000?text=imagen+pendiente',
-        price: 55.00,
+        id: 6,
+        name: 'Ratón Gaming RGB',
+        description: 'Precisión y estilo para tus sesiones de juego.',
+        imageUrl: 'https://placehold.co/400x300/EAE4D5/555?text=Ratón+Gaming',
+        price: 45.00,
         category: 'Accesorios'
     },
     {
+        id: 7,
+        name: 'Smartphone Última Generación',
+        description: 'Cámara increíble, rendimiento superior.',
+        imageUrl: 'https://placehold.co/400x300/8DD8FF/000?text=Smartphone+Pro',
+        price: 799.00,
+        category: 'Electrónica'
+    },
+    {
         id: 8,
-        name: 'Disco Duro Externo 1TB',
-        description: 'Almacenamiento adicional seguro y rápido.',
-        imageUrl: 'https://placehold.co/400x300/8DD8FF/000?text=imagen+pendiente',
-        price: 65.00,
-        category: 'Almacenamiento'
+        name: 'Tableta Gráfica Profesional',
+        description: 'Ideal para artistas digitales y diseñadores.',
+        imageUrl: 'https://placehold.co/400x300/4E71FF/fff?text=Tableta+Gráfica',
+        price: 350.00,
+        category: 'Accesorios'
     },
     {
         id: 9,
-        name: 'Router Wi-Fi 6',
-        description: 'Conexión a internet ultrarrápida y estable.',
-        imageUrl: 'https://placehold.co/400x300/4E71FF/fff?text=imagen+pendiente',
-        price: 120.00,
-        category: 'Redes'
+        name: 'Altavoz Bluetooth Portátil',
+        description: 'Sonido potente en cualquier lugar, resistente al agua.',
+        imageUrl: 'https://placehold.co/400x300/5409DA/fff?text=Altavoz+Bluetooth',
+        price: 65.00,
+        category: 'Electrónica'
     },
     {
         id: 10,
-        name: 'Impresora Multifuncional',
-        description: 'Imprime, escanea y copia con facilidad.',
-        imageUrl: 'https://placehold.co/400x300/5409DA/fff?text=imagen+pendiente',
-        price: 199.00,
-        category: 'Oficina'
+        name: 'Cámara Mirrorless 4K',
+        description: 'Captura momentos con calidad profesional.',
+        imageUrl: 'https://placehold.co/400x300/BBFBFF/000?text=Cámara+4K',
+        price: 1200.00,
+        category: 'Electrónica'
     }
 ];
 
-const productListElement = document.getElementById('product-list');
-const loadingOverlay = document.getElementById('loading-overlay');
-const notificationElement = document.getElementById('notification');
-const favoritesButton = document.getElementById('favorites-button');
-const loginButton = document.getElementById('login-button');
-const registerButton = document.getElementById('register-button');
-const userMenuIcon = document.getElementById('user-menu-icon');
-const searchInput = document.getElementById('search-input');
-
-const loginModal = document.getElementById('login-modal');
-const registerModal = document.getElementById('register-modal');
-const userMenuModal = document.getElementById('user-menu-modal');
-const modalCloseButtons = document.querySelectorAll('.modal-close');
-const switchToRegisterButton = document.getElementById('switch-to-register');
-const switchToLoginButton = document.getElementById('switch-to-login');
-const loginForm = document.getElementById('login-form');
-const registerForm = document.getElementById('register-form');
-
-const registerUsernameInput = document.getElementById('register-username');
-const registerEmailInput = document.getElementById('register-email');
-const registerPasswordInput = document.getElementById('register-password');
-const registerConfirmPasswordInput = document.getElementById('register-confirm-password');
-
-const authButtonsDiv = document.getElementById('auth-buttons');
-const userDisplayDiv = document.getElementById('user-display');
-const loggedInUsernameSpan = document.getElementById('logged-in-username');
-const logoutButton = document.getElementById('logout-button');
-
-const googleLoginButton = document.getElementById('google-login-button');
-const appleLoginButton = document.getElementById('apple-login-button');
-const facebookLoginButton = document.getElementById('facebook-login-button');
-
-const myAccountLink = document.getElementById('my-account-link');
-const myAccountSection = document.getElementById('my-account-section');
-const backToMainMenuButton = document.getElementById('back-to-main-menu');
-
-let products = [];
-let favorites = JSON.parse(localStorage.getItem('ecommerceFavorites')) || [];
-let users = JSON.parse(localStorage.getItem('ecommerceUsers')) || [];
-let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
-
+// --- Funciones de Utilidad ---
 const showLoading = () => {
-    loadingOverlay.style.display = 'flex';
+    loadingOverlay.classList.add('visible');
 };
 
 const hideLoading = () => {
-    loadingOverlay.style.display = 'none';
-};
-
-const showNotification = (message, duration = 3000) => {
-    notificationElement.textContent = message;
-    notificationElement.classList.add('show');
-    setTimeout(() => {
-        notificationElement.classList.remove('show');
-    }, duration);
+    loadingOverlay.classList.remove('visible');
 };
 
 const showModal = (modalElement) => {
@@ -146,210 +147,333 @@ const hideModal = (modalElement) => {
     modalElement.classList.remove('visible');
 };
 
+const showNotification = (message, duration = 3000) => {
+    // Asegurarse de que la barra de notificación existe o crearla
+    let currentNotificationBar = document.getElementById('notification-bar');
+    if (!currentNotificationBar) {
+        currentNotificationBar = document.createElement('div');
+        currentNotificationBar.id = 'notification-bar';
+        document.body.appendChild(currentNotificationBar);
+    }
+    
+    currentNotificationBar.textContent = message;
+    currentNotificationBar.classList.add('show');
+    setTimeout(() => {
+        currentNotificationBar.classList.remove('show');
+    }, duration);
+};
+
+// --- Funciones de Autenticación y UI ---
 const updateTopBar = () => {
     if (currentUser) {
-        userDisplayDiv.style.display = 'flex';
-        loggedInUsernameSpan.textContent = currentUser.username;
-        authButtonsDiv.style.display = 'none';
+        loggedInUsername.textContent = currentUser.username || currentUser.email;
+        userDisplay.style.display = 'flex';
+        authButtons.style.display = 'none';
+        // Mostrar icono de favoritos solo si hay usuario logueado
+        favoritesIcon.style.display = 'inline-block';
+        // Actualizar el estado del icono de favoritos en la barra superior
+        if (favoriteProducts.length > 0) {
+            favoritesIcon.classList.add('active');
+        } else {
+            favoritesIcon.classList.remove('active');
+        }
     } else {
-        userDisplayDiv.style.display = 'none';
-        loggedInUsernameSpan.textContent = '';
-        authButtonsDiv.style.display = 'flex';
+        userDisplay.style.display = 'none';
+        authButtons.style.display = 'flex';
+        // Ocultar icono de favoritos si no hay usuario logueado
+        favoritesIcon.style.display = 'none';
     }
 };
 
+const saveCurrentUser = (user) => {
+    currentUser = user;
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    updateTopBar();
+};
+
+const clearCurrentUser = () => {
+    currentUser = null;
+    localStorage.removeItem('currentUser');
+    // También borrar favoritos al cerrar sesión
+    favoriteProducts = [];
+    saveFavorites(); // Guardar el array de favoritos vacío
+    updateTopBar();
+    showModal(loginRegisterModal); // Muestra el modal de login al cerrar sesión
+};
+
+// --- Manejo de la Lógica de Favoritos ---
+
+// Función para guardar los favoritos en localStorage
+const saveFavorites = () => {
+    // Guardamos solo los IDs de los productos favoritos
+    localStorage.setItem('favoriteProducts', JSON.stringify(favoriteProducts));
+};
+
+// Función para cargar los favoritos desde localStorage
+const loadFavorites = () => {
+    const storedFavorites = localStorage.getItem('favoriteProducts');
+    if (storedFavorites) {
+        try {
+            favoriteProducts = JSON.parse(storedFavorites);
+        } catch (e) {
+            console.error("Error parsing favorite products from localStorage", e);
+            favoriteProducts = [];
+        }
+    } else {
+        favoriteProducts = [];
+    }
+};
+
+// Función para renderizar un solo producto en el contenedor de favoritos (o en la lista principal)
+const createProductCard = (product, isFavoriteView = false) => {
+    const productCard = document.createElement('div');
+    productCard.classList.add('product-card');
+
+    const isFav = favoriteProducts.includes(product.id);
+
+    productCard.innerHTML = `
+        <img src="${product.imageUrl}" alt="${product.name}">
+        <div class="product-info">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <span class="product-price">$${product.price.toFixed(2)}</span>
+        </div>
+        <div class="product-actions">
+            <button class="add-to-cart-button">Añadir al Carrito</button>
+            <button class="favorite-button ${isFav ? 'active' : ''}" data-product-id="${product.id}">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+    `;
+
+    const favoriteButton = productCard.querySelector('.favorite-button');
+    favoriteButton.addEventListener('click', (event) => {
+        event.stopPropagation(); // Evita que el clic se propague si la tarjeta fuera un enlace
+        toggleFavorite(product.id);
+
+        // Si estamos en la vista de favoritos, re-renderizar la lista
+        if (isFavoriteView) {
+            renderFavoriteProducts();
+        } else {
+            // Si estamos en la vista principal, solo actualiza el botón en la tarjeta
+            favoriteButton.classList.toggle('active');
+        }
+        updateTopBar(); // Para actualizar el color del icono de favoritos en la barra superior
+    });
+
+    // Ocultar botón de añadir al carrito si estamos en el modal de favoritos, si lo deseas
+    // if (isFavoriteView) {
+    //     productCard.querySelector('.add-to-cart-button').style.display = 'none';
+    // }
+
+    return productCard;
+};
+
+
+// Función para añadir/quitar un producto de favoritos
+const toggleFavorite = (productId) => {
+    const index = favoriteProducts.indexOf(productId);
+    if (index > -1) {
+        // Ya es favorito, lo quitamos
+        favoriteProducts.splice(index, 1);
+        showNotification('Producto eliminado de favoritos.', 2000);
+    } else {
+        // No es favorito, lo añadimos
+        favoriteProducts.push(productId);
+        showNotification('Producto añadido a favoritos.', 2000);
+    }
+    saveFavorites(); // Guarda los cambios
+    // Re-renderiza los productos en la vista principal para actualizar el estado del corazón
+    renderProducts(products);
+};
+
+
+// Renderiza los productos en el modal de favoritos
+const renderFavoriteProducts = () => {
+    favoriteProductsContainer.innerHTML = ''; // Limpiar el contenedor
+    const currentFavorites = products.filter(product => favoriteProducts.includes(product.id));
+
+    if (currentFavorites.length === 0) {
+        noFavoritesMessage.style.display = 'block';
+        favoritesIcon.classList.remove('active'); // Quitar color si no hay favoritos
+    } else {
+        noFavoritesMessage.style.display = 'none';
+        currentFavorites.forEach(product => {
+            // Aseguramos que la tarjeta de favorito muestre el corazón activo
+            const productCard = createProductCard(product, true); // Pasar true para isFavoriteView
+            favoriteProductsContainer.appendChild(productCard);
+        });
+        favoritesIcon.classList.add('active'); // Poner color si hay favoritos
+    }
+};
+
+// --- Funciones principales ---
 const fetchProducts = async () => {
     showLoading();
-    await new Promise(resolve => setTimeout(resolve, 500));
-    products = localProducts;
-    renderProducts(products);
-    hideLoading();
+    try {
+        // Simulamos una carga de datos
+        await new Promise(resolve => setTimeout(resolve, 500));
+        products = localProducts; // Asignamos los productos locales
+
+        renderProducts(products);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        showNotification('Error al cargar los productos.', 3000);
+    } finally {
+        hideLoading();
+    }
 };
 
 const renderProducts = (productsToRender) => {
-    productListElement.innerHTML = '';
-    if (productsToRender.length === 0) {
-        productListElement.innerHTML = '<p class="no-results">No se encontraron productos que coincidan con su búsqueda.</p>';
-        return;
-    }
-    productsToRender.forEach(product => {
-        const isFavorited = favorites.some(fav => fav.id === product.id);
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-        productCard.innerHTML = `
-            <img src="${product.imageUrl}" alt="${product.name}" onerror="this.onerror=null; this.src='https://placehold.co/400x300/cccccc/000?text=Imagen+no+disponible';">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <div class="category">${product.category}</div>
-            <div class="price">$${product.price.toFixed(2)}</div>
-            <div class="product-actions">
-                <button data-id="${product.id}">Ver Detalles</button> <button class="favorite-button ${isFavorited ? 'favorited' : ''}" data-id="${product.id}">
-                    <i class="fas fa-heart"></i>
-                </button>
-            </div>
-        `;
-        productCard.querySelector('.product-actions button:first-child').addEventListener('click', () => showNotification('Funcionalidad de Ver Detalles no implementada.', 3000));
-        productCard.querySelector('.favorite-button').addEventListener('click', (event) => toggleFavorite(product.id, event.currentTarget));
-        productListElement.appendChild(productCard);
-    });
-};
-
-const toggleFavorite = (productId, buttonElement) => {
-    const product = products.find(p => p.id === productId);
-    if (!product) return;
-
-    const existingFavoriteIndex = favorites.findIndex(fav => fav.id === product.id);
-
-    if (existingFavoriteIndex > -1) {
-        favorites.splice(existingFavoriteIndex, 1);
-        buttonElement.classList.remove('favorited');
-        showNotification(`${product.name} eliminado de favoritos.`);
+    productsContainer.innerHTML = ''; // Limpiar productos existentes
+    if (productsToRender && productsToRender.length > 0) {
+        productsToRender.forEach(product => {
+            const productCard = createProductCard(product);
+            productsContainer.appendChild(productCard);
+        });
     } else {
-        favorites.push({ id: product.id, name: product.name, price: product.price, imageUrl: product.imageUrl });
-        buttonElement.classList.add('favorited');
-        showNotification(`${product.name} agregado a favoritos!`);
+        productsContainer.innerHTML = '<p style="text-align: center; width: 100%;">No se encontraron productos.</p>';
     }
-    localStorage.setItem('ecommerceFavorites', JSON.stringify(favorites));
 };
 
-const searchProducts = () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const filteredProducts = products.filter(product => {
-        return product.name.toLowerCase().includes(searchTerm) ||
-               product.description.toLowerCase().includes(searchTerm) ||
-               product.category.toLowerCase().includes(searchTerm);
-    });
-    renderProducts(filteredProducts);
+
+const showSection = (sectionElement) => {
+    // Ocultar todas las secciones principales
+    productListElement.classList.remove('visible');
+    myAccountSection.classList.remove('visible');
+    // Asegurar que los modals se ocultan también cuando se cambia de sección
+    hideModal(favoritesModal); 
+    hideModal(userMenuModal);
+    hideModal(loginRegisterModal);
+
+    productListElement.style.display = 'none';
+    myAccountSection.style.display = 'none';
+
+    // Mostrar la sección deseada
+    sectionElement.classList.add('visible');
+    if (sectionElement === productListElement) {
+        sectionElement.style.display = 'grid'; // product-list es una cuadrícula
+    } else {
+        sectionElement.style.display = 'flex'; // my-account-section es flex
+    }
 };
 
-searchInput.addEventListener('input', searchProducts);
+const hideSection = (sectionElement) => {
+    sectionElement.classList.remove('visible');
+    sectionElement.style.display = 'none';
+};
 
-loginButton.addEventListener('click', () => {
-    hideModal(registerModal);
-    hideSection(myAccountSection);
-    showModal(loginModal);
-});
-
-registerButton.addEventListener('click', () => {
-    hideModal(loginModal);
-    hideSection(myAccountSection);
-    showModal(registerModal);
-});
-
-favoritesButton.addEventListener('click', () => {
-    showNotification('Funcionalidad de ver Favoritos no implementada.', 3000);
-    console.log('Current Favorites:', favorites);
-});
+// --- Event Listeners ---
+loginButton.addEventListener('click', () => showModal(loginRegisterModal));
+registerButton.addEventListener('click', () => showModal(loginRegisterModal));
 
 modalCloseButtons.forEach(button => {
     button.addEventListener('click', (event) => {
         const modalId = event.target.dataset.modal;
-        const modalElement = document.getElementById(modalId);
-        if (modalElement) {
-            hideModal(modalElement);
-        }
+        hideModal(document.getElementById(modalId));
     });
 });
 
 switchToRegisterButton.addEventListener('click', () => {
-    hideModal(loginModal);
-    showModal(registerModal);
+    loginSection.classList.remove('active');
+    registerSection.classList.add('active');
 });
 
 switchToLoginButton.addEventListener('click', () => {
-    hideModal(registerModal);
-    showModal(loginModal);
+    registerSection.classList.remove('active');
+    loginSection.classList.add('active');
 });
 
-loginForm.addEventListener('submit', (event) => {
+loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    showLoading();
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
-    const user = users.find(u => u.email === email && u.password === password);
-
-    if (user) {
-        currentUser = user;
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        showNotification(`Bienvenido de nuevo, ${currentUser.username}!`, 3000);
-        hideModal(loginModal);
-        updateTopBar();
-    } else {
-        showNotification('Correo o contraseña incorrectos.', 3000);
-    }
-});
-
-registerForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const username = registerUsernameInput.value;
-    const email = registerEmailInput.value;
-    const password = registerPasswordInput.value;
-    const confirmPassword = registerConfirmPasswordInput.value;
-
-    if (password !== confirmPassword) {
-        showNotification('Las contraseñas no coinciden.', 3300);
-        return;
-    }
-
-    if (users.some(user => user.email === email)) {
-        showNotification('Ya existe una cuenta con este correo electrónico.', 3300);
-        return;
-    }
-
-    const newUser = {
-        username: username,
-        email: email,
-        password: password
-    };
-
-    users.push(newUser);
-    localStorage.setItem('ecommerceUsers', JSON.stringify(users));
-
-    showNotification('Registro exitoso! Ahora puedes iniciar sesión.', 3000);
-    hideModal(registerModal);
-    registerForm.reset();
-});
-
-logoutButton.addEventListener('click', () => {
-    currentUser = null;
-    localStorage.removeItem('currentUser');
-    showNotification('Sesión cerrada.', 3000);
-    updateTopBar();
-    hideSection(myAccountSection);
-    showSection(productListElement);
-});
-
-googleLoginButton.addEventListener('click', async () => {
-    showLoading();
+    // Simulación de login exitoso
     await new Promise(resolve => setTimeout(resolve, 1000));
-    currentUser = { username: 'Usuario Google', email: 'google_user@example.com' };
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    showNotification(`Bienvenido, ${currentUser.username}! (Google)`, 3000);
-    hideModal(loginModal);
-    updateTopBar();
+    currentUser = {
+        username: 'Usuario Simulado',
+        email: email,
+        lastLogin: new Date().toLocaleString()
+    };
+    saveCurrentUser(currentUser);
+    showNotification('Inicio de sesión exitoso!', 3000);
+    hideModal(loginRegisterModal);
     hideLoading();
 });
 
-appleLoginButton.addEventListener('click', async () => {
+registerForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
     showLoading();
+    const username = document.getElementById('register-username').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const confirmPassword = document.getElementById('register-confirm-password').value;
+
+    if (password !== confirmPassword) {
+        showNotification('Las contraseñas no coinciden.', 3000);
+        hideLoading();
+        return;
+    }
+
+    // Simulación de registro exitoso
     await new Promise(resolve => setTimeout(resolve, 1000));
-    currentUser = { username: 'Usuario Apple', email: 'apple_user@example.com' };
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    showNotification(`Bienvenido, ${currentUser.username}! (Apple)`, 3000);
-    hideModal(loginModal);
-    updateTopBar();
+    currentUser = {
+        username: username,
+        email: email,
+        lastLogin: new Date().toLocaleString()
+    };
+    saveCurrentUser(currentUser);
+    showNotification('Registro exitoso! Has iniciado sesión.', 3000);
+    hideModal(loginRegisterModal);
+    hideLoading();
+});
+
+
+logoutButton.addEventListener('click', () => {
+    showNotification('Cerrando sesión...', 1500);
+    showLoading();
+    setTimeout(() => {
+        clearCurrentUser();
+        showNotification('Sesión cerrada.', 2000);
+        hideLoading();
+    }, 1000); // Simula el tiempo de cierre de sesión
+});
+
+// Implementación simulada de login con Google/Facebook/Apple (como se discutió en la respuesta anterior)
+googleLoginButton.addEventListener('click', async () => {
+    showNotification('Iniciando sesión con Google (simulado)...', 2000);
+    showLoading();
+    await new Promise(resolve => setTimeout(resolve, 1500)); // Simula tiempo de espera
+    currentUser = { username: 'Usuario Google', email: 'google_user@example.com', lastLogin: new Date().toLocaleString() };
+    saveCurrentUser(currentUser);
+    showNotification(`Bienvenido, ${currentUser.username}! (Google)`, 3000);
+    hideModal(loginRegisterModal);
     hideLoading();
 });
 
 facebookLoginButton.addEventListener('click', async () => {
+    showNotification('Iniciando sesión con Facebook (simulado)...', 2000);
     showLoading();
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    currentUser = { username: 'Usuario Facebook', email: 'facebook_user@example.com' };
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    await new Promise(resolve => setTimeout(resolve, 1500)); // Simula tiempo de espera
+    currentUser = { username: 'Usuario Facebook', email: 'facebook_user@example.com', lastLogin: new Date().toLocaleString() };
+    saveCurrentUser(currentUser);
     showNotification(`Bienvenido, ${currentUser.username}! (Facebook)`, 3000);
-    hideModal(loginModal);
-    updateTopBar();
+    hideModal(loginRegisterModal);
+    // updateTopBar(); // Ya se llama en saveCurrentUser
+    hideLoading();
+});
+
+appleLoginButton.addEventListener('click', async () => {
+    showNotification('Iniciando sesión con Apple (simulado)...', 2000);
+    showLoading();
+    await new Promise(resolve => setTimeout(resolve, 1500)); // Simula tiempo de espera
+    currentUser = { username: 'Usuario Apple', email: 'apple_user@example.com', lastLogin: new Date().toLocaleString() };
+    saveCurrentUser(currentUser);
+    showNotification(`Bienvenido, ${currentUser.username}! (Apple)`, 3000);
+    hideModal(loginRegisterModal);
+    // updateTopBar(); // Ya se llama en saveCurrentUser
     hideLoading();
 });
 
@@ -363,29 +487,15 @@ userMenuModal.addEventListener('click', (event) => {
     }
 });
 
-const showSection = (sectionElement) => {
-    productListElement.classList.remove('visible');
-    myAccountSection.classList.remove('visible');
-    productListElement.style.display = 'none';
-    myAccountSection.style.display = 'none';
-
-    sectionElement.classList.add('visible');
-    if (sectionElement === productListElement) {
-        sectionElement.style.display = 'grid';
-    } else {
-        sectionElement.style.display = 'flex';
-    }
-};
-
-const hideSection = (sectionElement) => {
-    sectionElement.classList.remove('visible');
-    sectionElement.style.display = 'none';
-};
-
 myAccountLink.addEventListener('click', (event) => {
     event.preventDefault();
     hideModal(userMenuModal);
     showSection(myAccountSection);
+    if (currentUser) {
+        accountUsername.textContent = currentUser.username || 'N/A';
+        accountEmail.textContent = currentUser.email || 'N/A';
+        lastLoginDate.textContent = currentUser.lastLogin || 'N/A';
+    }
 });
 
 backToMainMenuButton.addEventListener('click', () => {
@@ -393,8 +503,54 @@ backToMainMenuButton.addEventListener('click', () => {
     showSection(productListElement);
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    fetchProducts();
-    updateTopBar();
-    showSection(productListElement);
+// NUEVOS LISTENERS PARA FAVORITOS
+favoritesIcon.addEventListener('click', () => {
+    if (currentUser) {
+        showModal(favoritesModal);
+        renderFavoriteProducts(); // Renderiza los productos favoritos al abrir el modal
+    } else {
+        showNotification('Debes iniciar sesión para ver tus favoritos.', 3000);
+        showModal(loginRegisterModal);
+    }
 });
+
+openFavoritesModalButton.addEventListener('click', (event) => {
+    event.preventDefault(); // Previene el comportamiento predeterminado del enlace
+    hideModal(userMenuModal); // Cierra el menú de usuario
+    if (currentUser) {
+        showModal(favoritesModal);
+        renderFavoriteProducts(); // Renderiza los productos favoritos al abrir el modal
+    } else {
+        showNotification('Debes iniciar sesión para ver tus favoritos.', 3000);
+        showModal(loginRegisterModal);
+    }
+});
+
+favoritesModal.addEventListener('click', (event) => {
+    // Solo cierra el modal si se hace clic directamente en el fondo oscuro
+    if (event.target === favoritesModal) {
+        hideModal(favoritesModal);
+    }
+});
+
+// --- Inicialización al cargar el DOM ---
+document.addEventListener('DOMContentLoaded', () => {
+    loadFavorites(); // Carga los favoritos al inicio
+    fetchProducts();
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+        currentUser = JSON.parse(storedUser);
+    }
+    updateTopBar(); // Actualiza la barra superior y el estado del icono de favoritos
+    // Asegurarse de que el spinner se oculte si ya hay usuario logueado al cargar
+    hideLoading();
+});
+
+// Si la barra de notificación no existe en el HTML, la creamos dinámicamente
+// Esto es una mejora para asegurar que showNotification siempre funcione
+// aunque ya la tengas en el HTML.
+if (!document.getElementById('notification-bar')) {
+    const notificationBarElement = document.createElement('div');
+    notificationBarElement.id = 'notification-bar';
+    document.body.appendChild(notificationBarElement);
+}

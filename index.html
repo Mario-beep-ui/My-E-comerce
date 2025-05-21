@@ -28,123 +28,103 @@
                 <button id="login-button">Iniciar Sesión</button>
                 <button id="register-button">Registrarte</button>
             </div>
-            <button id="favorites-button">Favoritos</button>
+            <i class="fas fa-shopping-cart icon"></i>
+            <i class="fas fa-heart icon" id="favorites-icon"></i>
         </div>
     </div>
 
-    <header>
-        <h1>Mario's comerce</h1>
-        </header>
-
-    <div class="container">
-        <section class="product-list" id="product-list">
+    <main>
+        <section id="hero-section">
+            <h1>Descubre, Compra, Vende.</h1>
+            <p>Todo lo que necesitas, a un clic de distancia.</p>
         </section>
-        <section id="my-account-section" class="my-account-section">
-            <button id="back-to-main-menu" class="back-button"><i class="fas fa-arrow-left"></i> Regresar al Menú Principal</button>
-            <div class="account-header">
-                <div class="avatar">MV</div>
-                <div class="user-details">
-                    <p class="user-name">Mario Alejandro Vazquez Ramirez</p>
-                    <p class="user-email">mv109828@gmail.com</p>
+
+        <section id="category-section">
+            <h2>Categorías</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <img src="https://placehold.co/100x100/BBFBFF/000?text=Electrónica" alt="Electrónica">
+                    <p>Electrónica</p>
+                </div>
+                <div class="category-card">
+                    <img src="https://placehold.co/100x100/BBFBFF/000?text=Ropa" alt="Ropa">
+                    <p>Ropa</p>
+                </div>
+                <div class="category-card">
+                    <img src="https://placehold.co/100x100/BBFBFF/000?text=Hogar" alt="Hogar">
+                    <p>Hogar</p>
+                </div>
+                <div class="category-card">
+                    <img src="https://placehold.co/100x100/BBFBFF/000?text=Libros" alt="Libros">
+                    <p>Libros</p>
+                </div>
+                <div class="category-card">
+                    <img src="https://placehold.co/100x100/BBFBFF/000?text=Deportes" alt="Deportes">
+                    <p>Deportes</p>
+                </div>
+                <div class="category-card">
+                    <img src="https://placehold.co/100x100/BBFBFF/000?text=Juguetes" alt="Juguetes">
+                    <p>Juguetes</p>
                 </div>
             </div>
-            <ul class="account-options">
-                <li>
-                    <i class="fas fa-user-check"></i>
-                    <div class="option-content">
-                        <h4>Información personal</h4>
-                        <p>Información de tu identificación oficial y tu actividad fiscal.</p>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </li>
-                <li>
-                    <i class="fas fa-user"></i>
-                    <div class="option-content">
-                        <h4>Datos de tu cuenta</h4>
-                        <p>Datos que representan a la cuenta en Mario's comerce y Mario's Pago.</p>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </li>
-                <li>
-                    <i class="fas fa-lock"></i>
-                    <div class="option-content">
-                        <h4>Seguridad</h4>
-                        <p>Tienes configuraciones pendientes.</p>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </li>
-                <li>
-                    <i class="fas fa-credit-card"></i>
-                    <div class="option-content">
-                        <h4>Tarjetas</h4>
-                        <p>Tarjetas guardadas en tu cuenta.</p>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </li>
-                <li>
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div class="option-content">
-                        <h4>Direcciones</h4>
-                        <p>Direcciones guardadas en tu cuenta.</p>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </li>
-                <li>
-                    <i class="fas fa-shield-alt"></i>
-                    <div class="option-content">
-                        <h4>Privacidad</h4>
-                        <p>Preferencias y control sobre el uso de tus datos.</p>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </li>
-                <li>
-                    <i class="fas fa-comments"></i>
-                    <div class="option-content">
-                        <h4>Comunicaciones</h4>
-                        <p>Elige qué tipo de información quieres recibir.</p>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </li>
-            </ul>
         </section>
-    </div>
 
-    <div id="notification" class="notification"></div>
+        <section id="product-list" class="visible">
+            <h2>Productos Destacados</h2>
+            <div id="products-container" class="product-grid">
+                </div>
+        </section>
 
-    <div id="login-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close" data-modal="login-modal">&times;</span>
-            <h2>Iniciar Sesión</h2>
-            <form id="login-form">
-                <input type="email" id="login-email" placeholder="Correo Electrónico" required>
-                <input type="password" id="login-password" placeholder="Contraseña" required>
-                <button type="submit">Iniciar Sesión</button>
-            </form>
-            <div class="register-link">
-                ¿No tienes una cuenta? <button id="switch-to-register">Registrarte</button>
+        <section id="my-account-section">
+            <button class="back-button" id="back-to-main-menu-button">Volver al Menú Principal</button>
+            <div class="account-header">
+                <div class="avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-details">
+                    <h2 id="account-username"></h2>
+                    <p id="account-email"></p>
+                </div>
             </div>
-             <div class="social-login">
-                <p>O inicia sesión con:</p>
-                <button id="google-login-button"><i class="fab fa-google google"></i> Continuar con Google</button>
-                <button id="apple-login-button"><i class="fab fa-apple apple"></i> Continuar con Apple</button>
-                <button id="facebook-login-button"><i class="fab fa-facebook facebook"></i> Continuar con Facebook</button>
-            </div>
-        </div>
-    </div>
+            <div class="account-info">
+                <h3>Información de la Cuenta</h3>
+                <p><strong>Último inicio de sesión:</strong> <span id="last-login-date">N/A</span></p>
+                </div>
+        </section>
+    </main>
 
-    <div id="register-modal" class="modal-overlay">
+    <div id="login-register-modal" class="modal-overlay">
         <div class="modal-content">
-            <span class="modal-close" data-modal="register-modal">&times;</span>
-            <h2>Registrarte</h2>
-            <form id="register-form">
-                <input type="text" id="register-username" placeholder="Nombre de Usuario" required>
-                <input type="email" id="register-email" placeholder="Correo Electrónico" required>
-                <input type="password" id="register-password" placeholder="Contraseña" required>
-                <input type="password" id="register-confirm-password" placeholder="Confirmar Contraseña" required>
-                <button type="submit">Registrarte</button>
-            </form>
-            <div class="register-link">
-                ¿Ya tienes una cuenta? <button id="switch-to-login">Iniciar Sesión</button>
+            <span class="modal-close" data-modal="login-register-modal">&times;</span>
+            <div id="login-section" class="auth-form-container active">
+                <h2>Iniciar Sesión</h2>
+                <form id="login-form">
+                    <input type="email" id="login-email" placeholder="Correo Electrónico" required>
+                    <input type="password" id="login-password" placeholder="Contraseña" required>
+                    <button type="submit">Iniciar Sesión</button>
+                </form>
+                <div class="social-login">
+                    <p>O inicia sesión con:</p>
+                    <button class="social-button google" id="google-login-button"><i class="fab fa-google"></i> Google</button>
+                    <button class="social-button facebook" id="facebook-login-button"><i class="fab fa-facebook-f"></i> Facebook</button>
+                    <button class="social-button apple" id="apple-login-button"><i class="fab fa-apple"></i> Apple</button>
+                </div>
+                <div class="register-link">
+                    ¿No tienes una cuenta? <button id="switch-to-register">Regístrate</button>
+                </div>
+            </div>
+            <div id="register-section" class="auth-form-container">
+                <h2>Registrarte</h2>
+                <form id="register-form">
+                    <input type="text" id="register-username" placeholder="Nombre de Usuario" required>
+                    <input type="email" id="register-email" placeholder="Correo Electrónico" required>
+                    <input type="password" id="register-password" placeholder="Contraseña" required>
+                    <input type="password" id="register-confirm-password" placeholder="Confirmar Contraseña" required>
+                    <button type="submit">Registrarte</button>
+                </form>
+                <div class="register-link">
+                    ¿Ya tienes una cuenta? <button id="switch-to-login">Iniciar Sesión</button>
+                </div>
             </div>
         </div>
     </div>
@@ -155,11 +135,23 @@
             <h3>Menú de Usuario</h3>
             <ul>
                 <li><a href="#" id="my-account-link">Mi cuenta</a></li>
-                <li><a href="#">Compras</a></li> <li><a href="#">Historial</a></li> <li><a href="#">Favoritos</a></li>
+                <li><a href="#">Compras</a></li>
+                <li><a href="#">Historial</a></li>
+                <li><a href="#" id="open-favorites-modal-button">Favoritos</a></li>
                 <li><a href="#">Categorias</a></li>
                 <li><a href="#">Vender</a></li>
                 <li><a href="#">Opiniones</a></li>
             </ul>
+        </div>
+    </div>
+
+    <div id="favorites-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" data-modal="favorites-modal">&times;</span>
+            <h2>Mis Productos Favoritos</h2>
+            <div id="favorite-products-container" class="product-grid">
+                </div>
+            <p id="no-favorites-message" style="text-align: center; color: var(--text-medium); margin-top: 20px; display: none;">Aún no tienes productos favoritos.</p>
         </div>
     </div>
 
