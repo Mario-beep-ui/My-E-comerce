@@ -960,32 +960,34 @@ footer {
         font-size: 1.1em; /* Reducir tamaño de los iconos de favoritos/carrito */
     }
 
-    /* ESTILOS DEL TOP-BAR SCROLLED (SIN CAMBIOS RESPECTO AL ANTERIOR) */
+    /* ESTILOS DEL TOP-BAR SCROLLED (MODIFICADO PARA AUMENTAR ALTURA UN 35%) */
     .top-bar.scrolled {
-        /*
-        * Estas propiedades se mantienen como antes para la reducción del 75%
-        * cuando el usuario hace scroll.
-        */
+        width: 85%; /* Mantiene la reducción de ancho del 15% */
+        margin: 0 auto;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        box-shadow: var(--shadow-strong);
+
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 4px 10px; /* Reducción drástica del padding para lograr ~75% menos altura */
-        min-height: 35px; /* Altura mínima para asegurar visibilidad */
+        padding: 8px 10px; /* Aumentado de 4px a 8px para una mayor altura */
+        min-height: 48px; /* Ajustado de 35px para lograr el aumento del 35% */
     }
     .top-bar.scrolled .left-section {
         order: 1;
         gap: 5px;
     }
     .top-bar.scrolled .user-info .user-icon {
-        font-size: 1em; /* Reducir aún más el icono de usuario al hacer scroll */
+        font-size: 1.1em; /* Aumentado ligeramente para que se vea mejor */
     }
     .top-bar.scrolled .user-info .username {
         display: none; /* Asegurar que el nombre de usuario siga oculto al hacer scroll */
     }
     .top-bar.scrolled #logout-button,
     .top-bar.scrolled #auth-buttons button {
-        padding: 3px 6px;
-        font-size: 0.6em;
+        padding: 5px 8px; /* Aumentado ligeramente el padding */
+        font-size: 0.75em; /* Aumentado ligeramente la fuente */
     }
     .top-bar.scrolled .search-bar {
         order: 2;
@@ -994,16 +996,16 @@ footer {
         max-width: none;
     }
     .top-bar.scrolled .search-bar #search-input {
-        padding: 4px 6px;
-        font-size: 0.7em;
+        padding: 5px 8px; /* Aumentado ligeramente el padding */
+        font-size: 0.8em; /* Aumentado ligeramente la fuente */
     }
     .top-bar.scrolled .right-section {
         order: 3;
-        gap: 6px;
+        gap: 8px; /* Aumentado ligeramente el gap */
         flex-shrink: 0;
     }
     .top-bar.scrolled .right-section .icon {
-        font-size: 1em;
+        font-size: 1.1em; /* Aumentado ligeramente el tamaño de los iconos */
     }
 
 
