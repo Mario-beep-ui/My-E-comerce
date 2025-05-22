@@ -81,20 +81,63 @@
 
         <section id="my-account-section">
             <button class="back-button" id="back-to-main-menu-button">Volver al Menú Principal</button>
-            <div class="account-header">
-                <div class="avatar">
-                    <i class="fas fa-user-circle"></i>
+            <div class="account-profile-card">
+                <div class="profile-header">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <h2 id="account-username"></h2>
+                        <p id="account-email"></p>
+                    </div>
                 </div>
-                <div class="user-details">
-                    <h2 id="account-username"></h2>
-                    <p id="account-email"></p>
+                <div class="account-info-grid">
+                    <div class="info-item">
+                        <strong>Último inicio de sesión:</strong>
+                        <span id="last-login-date">N/A</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Miembro desde:</strong>
+                        <span id="member-since-date">N/A</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Artículos publicados:</strong>
+                        <span>0</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Compras realizadas:</strong>
+                        <span>0</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Productos favoritos:</strong>
+                        <span id="favorite-products-count">0</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Calificación promedio:</strong>
+                        <span><i class="fas fa-star" style="color: gold;"></i> 0.0</span>
+                    </div>
+                </div>
+                <div class="account-actions">
+                    <button class="action-button primary">Editar Perfil</button>
+                    <button class="action-button secondary">Cambiar Contraseña</button>
+                    <button class="action-button danger" id="logout-from-account">Cerrar Sesión</button>
                 </div>
             </div>
-            <div class="account-info">
-                <h3>Información de la Cuenta</h3>
-                <p><strong>Último inicio de sesión:</strong> <span id="last-login-date">N/A</span></p>
+            <div class="account-additional-sections">
+                <h3>Actividad Reciente</h3>
+                <div class="recent-activity-item">
+                    <p><strong>Compra:</strong> Auriculares Inalámbricos</p>
+                    <span>Fecha: 2024-05-18</span>
                 </div>
+                <div class="recent-activity-item">
+                    <p><strong>Publicación:</strong> Zapatillas Deportivas</p>
+                    <span>Fecha: 2024-05-15</span>
+                </div>
+                <p class="no-activity-message" style="display: none;">No hay actividad reciente.</p>
+            </div>
         </section>
+
+
     </main>
 
     <div id="login-register-modal" class="modal-overlay">

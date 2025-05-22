@@ -33,6 +33,11 @@ const backToMainMenuButton = document.getElementById('back-to-main-menu-button')
 const accountUsername = document.getElementById('account-username');
 const accountEmail = document.getElementById('account-email');
 const lastLoginDate = document.getElementById('last-login-date');
+// NUEVOS ELEMENTOS DEL DOM PARA MI CUENTA
+const memberSinceDate = document.getElementById('member-since-date');
+const favoriteProductsCount = document.getElementById('favorite-products-count');
+const logoutFromAccountButton = document.getElementById('logout-from-account');
+
 
 // NUEVOS ELEMENTOS DEL DOM PARA FAVORITOS
 const favoritesIcon = document.getElementById('favorites-icon');
@@ -43,6 +48,11 @@ const noFavoritesMessage = document.getElementById('no-favorites-message');
 
 // NUEVO: Referencia al top-bar para la animación
 const topBar = document.querySelector('.top-bar');
+
+// NUEVOS ELEMENTOS DEL DOM para ocultar/mostrar
+const mainContent = document.querySelector('main');
+const bannerLogo = document.getElementById('banner_logo');
+
 
 // --- Variables de Estado ---
 let currentUser = null;
@@ -193,7 +203,7 @@ const saveCurrentUser = (user) => {
 const clearCurrentUser = () => {
     currentUser = null;
     localStorage.removeItem('currentUser');
-    favoriteProducts = [];
+    favoriteProducts = []; // Limpiar favoritos al cerrar sesión
     saveFavorites();
     updateTopBar();
     showModal(loginRegisterModal);
@@ -245,11 +255,12 @@ const createProductCard = (product, isFavoriteView = false) => {
         toggleFavorite(product.id);
 
         if (isFavoriteView) {
-            renderFavoriteProducts();
+            renderFavoriteProducts(); // Volver a renderizar la lista de favoritos en el modal
         } else {
             favoriteButton.classList.toggle('active');
         }
         updateTopBar();
+        updateAccountInfo(); // Actualizar el contador de favoritos en Mi Cuenta
     });
 
     return productCard;
@@ -266,7 +277,7 @@ const toggleFavorite = (productId) => {
         showNotification('Producto añadido a favoritos.', 2000);
     }
     saveFavorites();
-    renderProducts(products);
+    renderProducts(products); // Para actualizar el estado del corazón en la vista principal
 };
 
 
@@ -279,11 +290,12 @@ const renderFavoriteProducts = () => {
     } else {
         noFavoritesMessage.style.display = 'none';
         currentFavorites.forEach(product => {
-            const productCard = createProductCard(product, true);
+            const productCard = createProductCard(product, true); // Pasar true para vista de favoritos
             favoriteProductsContainer.appendChild(productCard);
         });
     }
     updateTopBar();
+    updateAccountInfo(); // Asegurarse de que el contador en "Mi Cuenta" esté actualizado
 };
 
 // --- Funciones principales ---
@@ -316,26 +328,56 @@ const renderProducts = (productsToRender) => {
 
 
 const showSection = (sectionElement) => {
+    // Ocultar todas las secciones principales y los elementos globales
     productListElement.classList.remove('visible');
+    productListElement.style.display = 'none'; // Asegura que no se muestre
+
     myAccountSection.classList.remove('visible');
+    myAccountSection.style.display = 'none'; // Asegura que no se muestre
+
+    // Ocultar banner y main por defecto
+    bannerLogo.classList.add('hidden-section');
+    mainContent.classList.add('hidden-section');
+    document.body.classList.remove('my-account-active'); // Asegura que la clase se elimine si no es Mi Cuenta
+
+    // Ocultar todos los modals
     hideModal(favoritesModal); 
     hideModal(userMenuModal);
     hideModal(loginRegisterModal);
 
-    productListElement.style.display = 'none';
-    myAccountSection.style.display = 'none';
-
+    // Mostrar la sección deseada
     sectionElement.classList.add('visible');
     if (sectionElement === productListElement) {
-        sectionElement.style.display = 'grid';
-    } else {
-        sectionElement.style.display = 'flex';
+        sectionElement.style.display = 'grid'; // Grid para la lista de productos
+        bannerLogo.classList.remove('hidden-section'); // Mostrar banner
+        mainContent.classList.remove('hidden-section'); // Mostrar main
+    } else if (sectionElement === myAccountSection) {
+        sectionElement.style.display = 'flex'; // Flex para la sección de Mi Cuenta
+        document.body.classList.add('my-account-active'); // Añadir clase al body para estilos específicos
+        // bannerLogo y mainContent ya están ocultos por defecto en esta función
     }
 };
 
 const hideSection = (sectionElement) => {
     sectionElement.classList.remove('visible');
     sectionElement.style.display = 'none';
+};
+
+// Función para actualizar la información en la sección "Mi Cuenta"
+const updateAccountInfo = () => {
+    if (currentUser) {
+        accountUsername.textContent = currentUser.username || 'N/A';
+        accountEmail.textContent = currentUser.email || 'N/A';
+        lastLoginDate.textContent = currentUser.lastLogin || 'N/A';
+        memberSinceDate.textContent = currentUser.memberSince || 'N/A'; // Asumiendo que el campo exista
+        favoriteProductsCount.textContent = favoriteProducts.length; // Actualizar el contador de favoritos
+    } else {
+        accountUsername.textContent = 'Invitado';
+        accountEmail.textContent = 'N/A';
+        lastLoginDate.textContent = 'N/A';
+        memberSinceDate.textContent = 'N/A';
+        favoriteProductsCount.textContent = '0';
+    }
 };
 
 // --- Event Listeners ---
@@ -366,10 +408,12 @@ loginForm.addEventListener('submit', async (event) => {
     const password = document.getElementById('login-password').value;
 
     await new Promise(resolve => setTimeout(resolve, 1000));
+    // Simulación de usuario
     currentUser = {
         username: 'Usuario Simulado',
         email: email,
-        lastLogin: new Date().toLocaleString()
+        lastLogin: new Date().toLocaleString(),
+        memberSince: '2024-01-01' // Fecha de registro simulada
     };
     saveCurrentUser(currentUser);
     showNotification('Inicio de sesión exitoso!', 3000);
@@ -392,10 +436,12 @@ registerForm.addEventListener('submit', async (event) => {
     }
 
     await new Promise(resolve => setTimeout(resolve, 1000));
+    // Simulación de usuario
     currentUser = {
         username: username,
         email: email,
-        lastLogin: new Date().toLocaleString()
+        lastLogin: new Date().toLocaleString(),
+        memberSince: new Date().toLocaleDateString() // Fecha de registro actual
     };
     saveCurrentUser(currentUser);
     showNotification('Registro exitoso! Ha iniciado sesión.', 3000);
@@ -404,6 +450,7 @@ registerForm.addEventListener('submit', async (event) => {
 });
 
 
+// Este es el botón de cerrar sesión en el top-bar
 logoutButton.addEventListener('click', () => {
     showNotification('Cerrando sesión...', 1500);
     showLoading();
@@ -411,14 +458,28 @@ logoutButton.addEventListener('click', () => {
         clearCurrentUser();
         showNotification('Sesión cerrada.', 2000);
         hideLoading();
+        showSection(productListElement); // Regresar a la vista principal
     }, 1000);
 });
+
+// NUEVO: Este es el botón de cerrar sesión dentro de "Mi Cuenta"
+logoutFromAccountButton.addEventListener('click', () => {
+    showNotification('Cerrando sesión...', 1500);
+    showLoading();
+    setTimeout(() => {
+        clearCurrentUser();
+        showNotification('Sesión cerrada.', 2000);
+        hideLoading();
+        showSection(productListElement); // Regresar a la vista principal
+    }, 1000);
+});
+
 
 googleLoginButton.addEventListener('click', async () => {
     showNotification('Iniciando sesión con Google (simulado)...', 2000);
     showLoading();
     await new Promise(resolve => setTimeout(resolve, 1500));
-    currentUser = { username: 'Usuario Google', email: 'google_user@example.com', lastLogin: new Date().toLocaleString() };
+    currentUser = { username: 'Usuario Google', email: 'google_user@example.com', lastLogin: new Date().toLocaleString(), memberSince: '2023-10-26' };
     saveCurrentUser(currentUser);
     showNotification(`Bienvenido, ${currentUser.username}! (Google)`, 3000);
     hideModal(loginRegisterModal);
@@ -429,7 +490,7 @@ facebookLoginButton.addEventListener('click', async () => {
     showNotification('Iniciando sesión con Facebook (simulado)...', 2000);
     showLoading();
     await new Promise(resolve => setTimeout(resolve, 1500));
-    currentUser = { username: 'Usuario Facebook', email: 'facebook_user@example.com', lastLogin: new Date().toLocaleString() };
+    currentUser = { username: 'Usuario Facebook', email: 'facebook_user@example.com', lastLogin: new Date().toLocaleString(), memberSince: '2023-08-15' };
     saveCurrentUser(currentUser);
     showNotification(`Bienvenido, ${currentUser.username}! (Facebook)`, 3000);
     hideModal(loginRegisterModal);
@@ -440,7 +501,7 @@ appleLoginButton.addEventListener('click', async () => {
     showNotification('Iniciando sesión con Apple (simulado)...', 2000);
     showLoading();
     await new Promise(resolve => setTimeout(resolve, 1500));
-    currentUser = { username: 'Usuario Apple', email: 'apple_user@example.com', lastLogin: new Date().toLocaleString() };
+    currentUser = { username: 'Usuario Apple', email: 'apple_user@example.com', lastLogin: new Date().toLocaleString(), memberSince: '2024-03-01' };
     saveCurrentUser(currentUser);
     showNotification(`Bienvenido, ${currentUser.username}! (Apple)`, 3000);
     hideModal(loginRegisterModal);
@@ -461,16 +522,12 @@ myAccountLink.addEventListener('click', (event) => {
     event.preventDefault();
     hideModal(userMenuModal);
     showSection(myAccountSection);
-    if (currentUser) {
-        accountUsername.textContent = currentUser.username || 'N/A';
-        accountEmail.textContent = currentUser.email || 'N/A';
-        lastLoginDate.textContent = currentUser.lastLogin || 'N/A';
-    }
+    updateAccountInfo(); // Llamar a esta función para cargar los datos
 });
 
 backToMainMenuButton.addEventListener('click', () => {
-    hideSection(myAccountSection);
-    showSection(productListElement);
+    hideSection(myAccountSection); // Oculta la sección de mi cuenta
+    showSection(productListElement); // Muestra la sección principal de productos
 });
 
 favoritesIcon.addEventListener('click', () => {
@@ -527,4 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     updateTopBar();
     hideLoading();
+
+    // NUEVO: Asegurarse de que la página principal se vea al inicio
+    showSection(productListElement);
 });
