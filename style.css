@@ -66,6 +66,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+/* ESTILOS DEL TOP-BAR MODIFICADOS PARA EL EFECTO SCROLL */
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -74,8 +75,26 @@ body {
     background-color: var(--bright-blue);
     color: var(--white);
     box-shadow: var(--shadow-medium);
-    flex-wrap: wrap;
+
+    position: sticky; /* Hace que el elemento se "pegue" */
+    top: 0; /* Se pegará a la parte superior */
+    z-index: 999; /* Asegura que esté por encima de otros elementos */
+
+    transition: all 0.3s ease-in-out; /* Transición para todas las propiedades cambiantes */
+    width: 100%; /* Ancho completo por defecto */
+    border-radius: 0; /* Sin bordes redondeados por defecto */
+    box-sizing: border-box; /* Incluye padding en el ancho */
 }
+
+.top-bar.scrolled {
+    width: 98%; /* Disminuye el ancho en un 2% */
+    margin: 0 auto; /* Centra el div */
+    border-bottom-left-radius: 15px; /* Bordes redondeados */
+    border-bottom-right-radius: 15px;
+    box-shadow: var(--shadow-strong); /* Sombra más pronunciada */
+    padding: 10px 20px; /* Reduce un poco el padding */
+}
+
 
 .left-section, .right-section {
     display: flex;
@@ -159,11 +178,54 @@ body {
     color: var(--pale-blue);
 }
 
+/* Estilo para el icono de favoritos cuando hay productos en la lista */
+.icon#favorites-icon.active {
+    color: red; /* O el color que prefieras para indicar que hay favoritos */
+}
+
+/* Estilo para el banner_logo */
+#banner_logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* Altura del banner */
+    width: 95%; /* Ocupa el 95% del ancho */
+    margin: 20px auto; /* Centra el div y da el margen restante */
+    background: linear-gradient(90deg, var(--deep-purple), var(--bright-blue)); /* Degradado de colores */
+    color: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow-medium);
+    text-align: center;
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+    animation: fadeInScale 1s ease-out; /* Animación de entrada */
+}
+
+#banner_logo h1 {
+    font-family: 'Inter', sans-serif; /* Consistencia con la fuente principal */
+    font-size: 3.5em; /* Tamaño grande para el logo */
+    font-weight: 700; /* Negrita */
+    letter-spacing: 2px; /* Espaciado entre letras */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra de texto sutil */
+    margin: 0; /* Eliminar margen predeterminado del h1 */
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
 main {
     flex-grow: 1;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 20px auto;
+    padding: 20px; /* Mantenemos padding interno */
+    width: 95%; /* Ocupa el 95% del ancho */
+    margin: 20px auto; /* Centra el div y da el margen restante */
     background-color: var(--white);
     border-radius: 10px;
     box-shadow: var(--shadow-medium);
@@ -235,9 +297,10 @@ main {
     margin: 0;
 }
 
+/* Cambios para el product-grid: 5 columnas en desktop, 2 en móvil */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(5, 1fr); /* 5 columnas para desktop */
     gap: 25px;
     padding: 0 20px;
 }
@@ -315,11 +378,12 @@ main {
     background-color: #3f5ec2; /* Un tono más oscuro */
 }
 
+/* Estilos para el botón de favoritos en las tarjetas de producto */
 .favorite-button {
     background: none;
     border: none;
     font-size: 1.5em;
-    color: var(--muted-grey);
+    color: var(--muted-grey); /* Color por defecto (no favorito) */
     cursor: pointer;
     transition: color 0.2s ease;
 }
@@ -329,8 +393,9 @@ main {
 }
 
 .favorite-button:hover {
-    color: #cc0000;
+    color: #cc0000; /* Un rojo más oscuro al pasar el ratón */
 }
+
 
 /* My Account Section */
 #my-account-section {
@@ -413,7 +478,7 @@ main {
     color: var(--text-dark);
 }
 
-/* Modals */
+/* Modals (General Styles) */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -465,6 +530,7 @@ main {
     color: var(--text-dark);
 }
 
+/* Auth Forms (Login/Register) */
 .auth-form-container {
     display: none;
     flex-direction: column;
@@ -710,9 +776,19 @@ footer {
         margin: 15px 0 0 0;
     }
 
+    /* NUEVO: Responsive para banner_logo */
+    #banner_logo {
+        height: 100px; /* Reduce la altura en móviles */
+        margin: 15px auto;
+    }
+    #banner_logo h1 {
+        font-size: 2.2em; /* Reduce el tamaño del texto en móviles */
+    }
+
     main {
         padding: 15px;
-        margin: 15px auto;
+        width: 95%; /* Mantiene el 95% para móviles también */
+        margin: 15px auto; /* Centra y ajusta el margen */
     }
 
     #hero-section {
@@ -742,8 +818,9 @@ footer {
         height: 60px;
     }
 
+    /* Cambio: 2 columnas para dispositivos móviles */
     .product-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
         padding: 0 10px;
     }
@@ -876,14 +953,14 @@ footer {
     gap: 15px; /* Un poco menos de espacio entre productos en el modal */
 }
 
-/* Ocultar el botón de añadir al carrito en el modal de favoritos si lo deseas */
+/* Asegurarse de que el botón de añadir al carrito siga funcionando */
 #favorite-products-container .add-to-cart-button {
-    display: block; /* Mantenemos el botón de añadir al carrito en el modal */
+    display: block; /* Asegura que sea visible si lo ocultamos en la vista principal */
 }
 
 /* Asegurarse de que el botón de favorito siga funcionando para quitar */
 #favorite-products-container .favorite-button {
-    color: red; /* Siempre rojo si está en favoritos */
+    color: red; /* Siempre rojo si está en favoritos cuando se muestra en el modal */
 }
 
 #favorite-products-container .favorite-button:hover {

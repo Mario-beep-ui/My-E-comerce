@@ -15,7 +15,7 @@
 
     <div class="top-bar">
         <div class="left-section">
-             <div id="user-display" class="user-info">
+             <div id="user-display" class="user-info" style="display: none;">
                 <i class="fas fa-user-circle user-icon" id="user-menu-icon"></i> <span id="logged-in-username" class="username"></span>
                 <button id="logout-button">Cerrar Sesión</button>
             </div>
@@ -24,13 +24,17 @@
             <input type="text" id="search-input" placeholder="Busca artículos, marcas y más...">
         </div>
         <div class="right-section">
-             <div id="auth-buttons">
+             <div id="auth-buttons" style="display: flex;">
                 <button id="login-button">Iniciar Sesión</button>
                 <button id="register-button">Registrarte</button>
             </div>
             <i class="fas fa-shopping-cart icon"></i>
-            <i class="fas fa-heart icon" id="favorites-icon"></i>
+            <i class="fas fa-heart icon" id="favorites-icon" style="display: none;"></i>
         </div>
+    </div>
+
+    <div id="banner_logo">
+        <h1>Mario's Ecommerce</h1>
     </div>
 
     <main>
